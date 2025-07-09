@@ -1,0 +1,3 @@
+/home/pi5test/Developments/BLE_Peripheral_Pi5/build/CMakeFiles/BLE_Peripheral_Pi5.dir
+/home/pi5test/Developments/BLE_Peripheral_Pi5/build/CMakeFiles/edit_cache.dir
+/home/pi5test/Developments/BLE_Peripheral_Pi5/build/CMakeFiles/rebuild_cache.dir
