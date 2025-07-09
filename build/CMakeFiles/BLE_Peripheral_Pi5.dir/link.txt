@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/BLE_Peripheral_Pi5.dir/src/main.cpp.o CMakeFiles/BLE_Peripheral_Pi5.dir/src/BLEPeripheral.cpp.o CMakeFiles/BLE_Peripheral_Pi5.dir/src/BLEService.cpp.o CMakeFiles/BLE_Peripheral_Pi5.dir/src/BLECharacteristic.cpp.o CMakeFiles/BLE_Peripheral_Pi5.dir/src/BLEAdvertisement.cpp.o -o BLE_Peripheral_Pi5  -ldbus-1 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lglib-2.0 
