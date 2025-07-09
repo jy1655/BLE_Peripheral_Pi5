@@ -1,0 +1,21 @@
+# Build artifacts
+build/
+*.o
+*.a
+*.so
+*.so.*
+*.dll
+*.exe
+*.out
+
+# Editor-specific files
+.vscode/
+.idea/
+*.swp
+*~
+
+# Other
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
