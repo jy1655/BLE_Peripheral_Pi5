@@ -1,2 +1,11 @@
-dbus-python
-PyGObject
+Ubuntu 22.04.4 LTS
+
+LattePanda LattePanda 3 Delta
+
+python3 3.10.12
+
+
+bluez 5.64
+
+pydbus 0.6.0
+
