@@ -63,7 +63,7 @@ class BLEManager:
         # Finish Registering advertisement
         register_ble = ble_advertisement.RegisterAdvertisement()
         ad_manager = register_ble.make_ad_manager(self.bus, self.advertisement)
-        ad_manager.RegisterAdvertisement(self.advertisement.get_path(), {},
+        register_id = ad_manager.RegisterAdvertisement(self.advertisement.get_path(), {},
                                         reply_handler = self.register_ad_cb,
                                         error_handler = self.register_ad_error_cb)
         print("Advertisement registered")
@@ -91,7 +91,31 @@ class BLEManager:
         time.sleep(timeout)
         self.mainloop.quit()
 
-
+    """
+    def disconnect_all_devices(self):
+        
+        # 버스의 프로시 객체 관리자를 얻습니다.
+        om = self.bus.get_object(advertising_config.BLUEZ_SERVICE, '/')
+        managed_objects = om.GetManagedObjects()
+        print(managed_objects)
+        # 모든 관리 객체를 순회합니다.
+        for path, interfaces in managed_objects.items():
+            # Bluetooth 디바이스 인터페이스가 있는지 확인합니다.
+            if advertising_config.DEVICE_IFACE in interfaces:
+                device_props = interfaces[advertising_config.DEVICE_IFACE]
+                if device_props.get("Connected", False):
+                    print(f"{path}에 있는 디바이스가 연결되어 있습니다. 연결 해제 중...")
+                
+                    # 디바이스의 메소드를 호출하여 연결을 해제합니다.
+                    device_obj = self.bus.get_object(advertising_config.BLUEZ_SERVICE, path)
+                    try:
+                        device_obj.Disconnect(reply_handler=self.on_device_disconnected, error_handler=self.on_device_disconnect_error)
+                    except Exception as e:
+                        print(f"{path}에 있는 디바이스를 해제하는 중 에러가 발생했습니다: {str(e)}")
+            else:
+                print("check code")
+    """
+    
     def set_connected_status(self, status):
         global connected
         if (status == 1):
@@ -129,3 +153,9 @@ class BLEManager:
     def register_ad_error_cb(self, error):
         print('Failed to register advertisement: ' + str(error))
         self.stop_main_loop(self.mainloop)
+
+    def on_device_disconnected():
+        print("Device disconnected successfully.")
+
+    def on_device_disconnect_error(error):
+        print(f"Failed to disconnect device: {str(error)}")

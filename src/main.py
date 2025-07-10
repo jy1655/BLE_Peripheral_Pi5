@@ -42,16 +42,14 @@ def main(timeout=0):
     try:
         # Start the GLib main loop
         mainloop.run()
-
     except KeyboardInterrupt:
         print("EXITING NOW...")
+    #    ble_manager.disconnect_all_devices()
 
     finally:
         # Provide a graceful shutdown mechanism.
         ble_manager.stop_advertising()
         sys.exit(0)
-
-
 
 
 if __name__ == "__main__":
