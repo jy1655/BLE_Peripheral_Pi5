@@ -1,3 +1,16 @@
+# ble_advertisement.py
+
+"""
+BLE 광고 데이터 구성 등록을 위한 메소드 모음
+
+LEAdvertisement 클래스
+    광고를 등록하기 위한 파라미터를 등록하기 위한 클래스
+
+RegisterAdvertisement 클래스
+    LEAdvertisement에서 정의한 광고 파라미터를 Dbus에 등록하기 위한 클래스
+"""
+
+
 import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))) # config 폴더를 절대경로로 가져오기 위한 코드
 from config import advertising_config, bluetooth_exceptions
@@ -10,7 +23,8 @@ class LEAdvertisement(dbus.service.Object):
     """
     This class represents a BLE advertisement.
     BlueZ 의 org.bluez.LEAdvertisement1 interface documentation:
-    광고 데이터 정의
+    광고 데이터 정의(Legacy type)
+    포맷에 맞게 
     """
     PATH_BASE = advertising_config.PATH_BASE + '/advertisement' # Unique path for this advertisement instance based on an index.
 
@@ -32,6 +46,8 @@ class LEAdvertisement(dbus.service.Object):
     def get_properties(self):
         """
         Packages all the advertisement properties into a DBus-friendly format.
+
+        코드 내부에서 사용되는 포맷을 DBus 포맷으로 변경 하기 위한 메소드
         """
         properties = dict()
         properties['Type'] = self.ad_type
@@ -69,11 +85,17 @@ class LEAdvertisement(dbus.service.Object):
 
     # Add props
     def add_service_uuid(self, uuid):
+        """
+        Service UUID 목록에 추가
+        """
         if not self.service_uuids:
             self.service_uuids = []
         self.service_uuids.append(uuid)
 
     def erase_service_uuid(self):
+        """
+        설정되어 있던 Service UUID 목록을 삭제하고 기본 목록으로 변경
+        """
         self.service_uuids = advertising_config.SERVICE_UUID
 
     def add_solicit_uuid(self, uuid):

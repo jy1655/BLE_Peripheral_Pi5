@@ -1,7 +1,8 @@
 # Oculo Bot BLE Peripheral on Ubuntu Python
 
-라떼판다 3 델타용 BLE peripheral 프로그램.<br>
+우분투(리눅스) 기반 BLE peripheral advertisement 프로젝트.<br>
 Ubuntu 22.04 기반에 BlueZ 라이브러리를 사용했고, BLE central 디바이스와의 문자열 통신을 전제함.
+현재 버전에서는 Py-Dbus 라이브러리를 사용하여 Legacy Type의 광고만 가능함
 
 <br>
 
@@ -9,7 +10,7 @@ Ubuntu 22.04 기반에 BlueZ 라이브러리를 사용했고, BLE central 디바
 
 이 프로젝트를 빌드하고 실행하기 전 다음과 같은 것을 설치할 필요가 있음.
   1. python3
-  2. pydbus 0.6.0
+  2. dbus-python 1.3.2
   3. 기타 종속성 라이브러리
 
 <br>
@@ -23,8 +24,8 @@ sudo apt install bluez libbluetooth-dev
 ```
 
 <br>
-
-### 1.2. DBus 
+~~
+### 1.2. DBus - 
 
  `/etc/dbus-1/system.d/bluetooth.conf` 파일 일부 수정
 ```bash
@@ -45,9 +46,9 @@ sudo apt install bluez libbluetooth-dev
     <allow send_interface="org.mpris.MediaPlayer2.Player"/>
   </policy>
 ```
+~~
 
-
-
+BlueZ를 Experimental 모드로 실행해야 정상적으로 Peripheral Advertisement가 가능함
 
 
 <br>

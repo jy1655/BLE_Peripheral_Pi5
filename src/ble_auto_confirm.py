@@ -1,3 +1,13 @@
+# ble_auto_confirm.py
+
+"""
+BLE 광고중에 Central에서 연결 요청시 자동으로 연결될 수 있도록 하는 메소드
+
+원래 Central에서 연결 요청시 Peripheral쪽에서 승인을 하여 서로 페어링 되는 과정이 필요함
+Peripheral 승인 과정을 org.bluez.Agent1 인터페이스를 구현하여 BLE 장치의 연결 및 페어링 과정에서 사용자 승인 없이 자동으로 인증을 처리하도록 하는 클래스
+"""
+
+
 import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))) # config 폴더를 절대경로로 가져오기 위한 코드
 from config import advertising_config
@@ -23,7 +33,7 @@ class AutoConfirmAgent(dbus.service.Object):
     def Release(self):
         print("Agent released")
         if self.exit_on_release:
-           # GLib.MainLoop().quit()
+            # GLib.MainLoop().quit()
             print("exit plz")
             return
 

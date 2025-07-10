@@ -1,5 +1,11 @@
-# Advertiging configuration parameters for the BLE advertising using BlueZ
+# advertising_config.py
 
+# Advertiging configuration parameters for the BLE advertising using BlueZ
+"""
+광고 파라미터 데이터 정의 
+
+ble_manager.py, gatt_manager.py에서 사용되는 광고 데이터 정의
+"""
 
 DEVICE_NAME = "Oculo_BLE_Advertiser"
 
@@ -28,9 +34,14 @@ SERVICE_UUID = [
     '180D'
 ]
 
+EXAMPLE_UUID = '180D'
+
+
 MANUFACTURER_DATA = {
     #optional
 }
+
+EXAMPLE_MANUF_CODE = '0xffff'
 
 INCLUDE_TX_POWER = False
 
@@ -39,18 +50,6 @@ INCLUDE_TX_POWER = False
 # Example UUID
 TEMPERATURE_SVC_UUID = "e95d6100-251d-470a-a062-fa1922dfa9a8"
 TEMPERATURE_CHR_UUID = "e95d9250-251d-470a-a062-fa1922dfa9a8"
-
 LED_TEXT_CHR_UUID = "e95d93ee-251d-470a-a062-fa1922dfa9a8"
 
-TEST_SVC_UUID = '12345678-1234-5678-1234-56789abcdef0'
-TEST_CHRC_UUID = '12345678-1234-5678-1234-56789abcdef1'
-TEST_DESC_UUID = '12345678-1234-5678-1234-56789abcdef2'
-CHRC_UUID = '12345678-1234-5678-1234-56789abcdef3'
-DESC_UUID = '12345678-1234-5678-1234-56789abcdef4'
-TEST_CHRC_UUID1 = '12345678-1234-5678-1234-56789abcdef5'
-TEST_DESC_UUID1 = '12345678-1234-5678-1234-56789abcdef6'
 
-
-BATTERY_UUID = '180f'
-BATTERY_LVL_UUID = '2a19'
-CUD_UUID = '2901'

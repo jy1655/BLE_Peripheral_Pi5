@@ -1,6 +1,11 @@
+# ble_gatt.py
+
+"""
+gatt_manager.py에서 사용되는 Gatt 구성 등록 클래스
+"""
+
 import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))) # config 폴더를 절대경로로 가져오기 위한 코드
-
 from config import advertising_config, bluetooth_exceptions
 import dbus
 import dbus.service
@@ -40,7 +45,6 @@ class GattApplication(dbus.service.Object):
                     response[desc.get_path()] = desc.get_properties()
 
         return response
-    
 
 
 class GattService(dbus.service.Object):
@@ -70,13 +74,13 @@ class GattService(dbus.service.Object):
         Returns properties of the GATT service to be exposed over D-Bus.
         """
         return {
-            advertising_config.GATT_SERVICE_IFACE: {
-                'UUID': self.uuid,
-                'Primary': self.primary,
-                'Characteristics': dbus.Array(
-                    self.get_characteristic_paths(),
-                    signature='o')
-            }
+                advertising_config.GATT_SERVICE_IFACE: {
+                        'UUID': self.uuid,
+                        'Primary': self.primary,
+                        'Characteristics': dbus.Array(
+                                self.get_characteristic_paths(),
+                                signature='o')
+                }
         }
 
     def get_path(self):
@@ -88,6 +92,7 @@ class GattService(dbus.service.Object):
         self.characteristics.append(characteristic)
 
     def get_characteristic_paths(self):
+        # Returns the D-Bus characteristic paths of this service.
         result = []
         for chrc in self.characteristics:
             result.append(chrc.get_path())
@@ -120,13 +125,6 @@ class GattCharacteristic(dbus.service.Object):
         self.service = service
         self.flags = flags
         self.descriptors = []
-        """
-        # D-Bus 신호 수신기 설정
-        self.bus.add_signal_receiver(self.properties_changed,
-                                     dbus_interface=advertising_config.DBUS_PROP_IFACE,
-                                     signal_name="PropertiesChanged",
-                                     path_keyword="path")
-        """
         dbus.service.Object.__init__(self, bus, self.path)
 
     def get_properties(self):
@@ -143,6 +141,7 @@ class GattCharacteristic(dbus.service.Object):
         }
 
     def get_path(self):
+        # Return D-Bus object path
         return dbus.ObjectPath(self.path)
 
     def add_descriptor(self, descriptor):
@@ -150,6 +149,7 @@ class GattCharacteristic(dbus.service.Object):
         self.descriptors.append(descriptor)
 
     def get_descriptor_paths(self):
+        # Return descriptor path if parameter have descriptors, 
         result = []
         for desc in self.descriptors:
             result.append(desc.get_path())
@@ -158,18 +158,7 @@ class GattCharacteristic(dbus.service.Object):
     def get_descriptors(self):
         # Returns all descriptors added to this characteristic
         return self.descriptors
-    """   
-    def properties_changed(self, interface, changed, invalidated, path=None):
-    # 속성 변화를 처리하는 로직
-        if interface == advertising_config.DEVICE_IFACE and "Connected" in changed:
-            connected = changed["Connected"]
 
-            if connected:
-                print(f"{path}에서 장치가 연결되었습니다.")
-            else:
-                print(f"{path}에서 장치가 연결 해제되었습니다.")
-                # 추가적인 연결 해제 처리 수행 가능
-    """
     @dbus.service.method(advertising_config.DBUS_PROP_IFACE, in_signature='s', out_signature='a{sv}')
     def GetAll(self, interface):
         if interface != advertising_config.GATT_CHRC_IFACE:
@@ -218,11 +207,11 @@ class GattDescriptor(dbus.service.Object):
     def get_properties(self):
         # Returns properties of the GATT descriptor to be exposed over D-Bus.
         return {
-            advertising_config.GATT_DESC_IFACE: {
-                'Characteristic': self.chrc.get_path(),
-                'UUID': self.uuid,
-                'Flags': self.flags,
-            }
+                advertising_config.GATT_DESC_IFACE: {
+                        'Characteristic': self.chrc.get_path(),
+                        'UUID': self.uuid,
+                        'Flags': self.flags,
+                }
         }
 
     def get_path(self):
